@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ml-sentiment-app-config
+  labels:
+    app.kubernetes.io/name: ml-sentiment-app
+    app.kubernetes.io/part-of: sentiment-analysis
+data:
+  PORT: "8000"
+  LOG_LEVEL: "info"
+  WORKERS: "1"
+#configmap-file

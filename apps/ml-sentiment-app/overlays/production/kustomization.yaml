@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: default
+
+resources:
+  - ../../base
+
+labels:
+  - includeSelectors: true
+    includeTemplates: true
+    pairs:
+      environment: production
+
+images:
+  - name: registry.local:5000/ml-sentiment-app
+    newName: registry.local:5000/ml-sentiment-app
+    newTag: "6a14744d47402476fa4b229e531a35ba2a476a42"
+
+patches:
+  - target:
+      kind: Rollout
+      name: ml-sentiment-app
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits
+        value:
+          cpu: 1000m
+          memory: 1Gi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests
+        value:
+          cpu: 250m
+          memory: 256Mi

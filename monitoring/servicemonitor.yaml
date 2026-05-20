@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ml-sentiment-app
+  namespace: default
+  labels:
+    app.kubernetes.io/name: ml-sentiment-app
+    app.kubernetes.io/part-of: sentiment-analysis
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ml-sentiment-app
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

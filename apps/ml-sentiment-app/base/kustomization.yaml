@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - rollout.yaml
+  - configmap.yaml
+  - service.yaml
+  - canary-service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: ml-sentiment-app
+  app.kubernetes.io/part-of: sentiment-analysis

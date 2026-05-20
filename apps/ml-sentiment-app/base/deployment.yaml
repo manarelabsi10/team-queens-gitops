@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-sentiment-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ml-sentiment-app
+  template:
+    metadata:
+      labels:
+        app: ml-sentiment-app
+    spec:
+      containers:
+        - name: ml-sentiment-app
+          image: registry.local:5000/ml-sentiment-app:latest
+          ports:
+            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
